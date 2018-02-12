@@ -60,6 +60,10 @@ public class MamutGUI extends JFrame
 	private static final ImageIcon ACTION_ICON_ORIG = new ImageIcon( MaMuT.class.getResource( "cog.png" ) );
 
 	private static final ImageIcon ACTION_ICON;
+	
+	private static final ImageIcon PROOFREADING_ICON_ORIG = new ImageIcon( MaMuT.class.getResource( "checkmark.png" ) );
+
+	private static final ImageIcon PROOFREADING_ICON;
 
 	static
 	{
@@ -74,6 +78,10 @@ public class MamutGUI extends JFrame
 		final Image image3 = ACTION_ICON_ORIG.getImage();
 		final Image newimg3 = image3.getScaledInstance( 32, 32, java.awt.Image.SCALE_SMOOTH );
 		ACTION_ICON = new ImageIcon( newimg3 );
+		
+		final Image image4 = PROOFREADING_ICON_ORIG.getImage();
+		final Image newimg4 = image4.getScaledInstance( 32, 32, java.awt.Image.SCALE_SMOOTH );
+		PROOFREADING_ICON = new ImageIcon( newimg4 );
 	}
 
 
@@ -82,6 +90,8 @@ public class MamutGUI extends JFrame
 	private final MamutControlPanel viewPanel;
 
 	private final AnnotationPanel annotationPanel;
+	
+	private final ProofreadingPanel proofreadingPanel;
 
 	private final MamutActionPanel actionPanel;
 
@@ -101,6 +111,9 @@ public class MamutGUI extends JFrame
 
 		annotationPanel = new AnnotationPanel( mamut.getGuimodel() );
 		tabbedPane.addTab( "Annotation", ANNOTATION_ICON, annotationPanel, "Annotation tools" );
+		
+		proofreadingPanel = new ProofreadingPanel( mamut.getSelectionModel(), trackmate.getModel() );
+		tabbedPane.addTab( "Proofreading", PROOFREADING_ICON, proofreadingPanel, "Proofreading tools" );
 
 		final MamutActionProvider actionProvider = new MamutActionProvider();
 		final List< String > actionKeys = actionProvider.getVisibleKeys();
@@ -141,5 +154,10 @@ public class MamutGUI extends JFrame
 	public AnnotationPanel getAnnotationPanel()
 	{
 		return annotationPanel;
+	}
+	
+	public ProofreadingPanel getProofReadingPanel()
+	{
+		return proofreadingPanel;
 	}
 }

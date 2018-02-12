@@ -327,6 +327,10 @@ public class MaMuT implements ModelChangeListener
 				{
 					centerOnSpot( selectionModel.getSpotSelection().iterator().next() );
 				}
+				else if ( 1 < selectionModel.getSpotSelection().size() && gui.getProofReadingPanel().isShowing() )
+				{
+					centerOnSpot( selectionModel.getSpotSelection().iterator().next() );
+				}
 			}
 		} );
 
