@@ -219,6 +219,8 @@ public class MamutOverlay
 			final int currentFrame = state.getCurrentTimepoint();
 			final int trackDisplayDepth = ( Integer ) viewer.displaySettings.get( TrackMateModelView.KEY_TRACK_DISPLAY_DEPTH );
 			final Set< Integer > filteredTrackIDs = model.getTrackModel().unsortedTrackIDs( true );
+			final Set< Integer > approvedTrackIDs = model.getTrackModel().approvedTrackIDs( false );
+			final Set< Integer > nonApprovedTrackIDs = model.getTrackModel().nonApprovedTrackIDs( false );
 
 			g.setStroke( NORMAL_STROKE );
 			if ( trackDisplayMode == TrackMateModelView.TRACK_DISPLAY_MODE_LOCAL || trackDisplayMode == TrackMateModelView.TRACK_DISPLAY_MODE_LOCAL_QUICK )
@@ -255,6 +257,42 @@ public class MamutOverlay
 			case TrackMateModelView.TRACK_DISPLAY_MODE_WHOLE:
 			{
 				for ( final Integer trackID : filteredTrackIDs )
+				{
+					viewer.trackColorProvider.setCurrentTrackID( trackID );
+					final Set< DefaultWeightedEdge > track = new HashSet<>( model.getTrackModel().trackEdges( trackID ) );
+
+					for ( final DefaultWeightedEdge edge : track )
+					{
+						source = model.getTrackModel().getEdgeSource( edge );
+						target = model.getTrackModel().getEdgeTarget( edge );
+						g.setColor( viewer.trackColorProvider.color( edge ) );
+						drawEdge( g, source, target, transform, 1f, doLimitDrawingDepth, drawingDepth );
+					}
+				}
+				break;
+			}
+
+			case TrackMateModelView.TRACK_DISPLAY_MODE_APPROVED_ONLY:
+			{
+				for ( final Integer trackID : approvedTrackIDs )
+				{
+					viewer.trackColorProvider.setCurrentTrackID( trackID );
+					final Set< DefaultWeightedEdge > track = new HashSet<>( model.getTrackModel().trackEdges( trackID ) );
+
+					for ( final DefaultWeightedEdge edge : track )
+					{
+						source = model.getTrackModel().getEdgeSource( edge );
+						target = model.getTrackModel().getEdgeTarget( edge );
+						g.setColor( viewer.trackColorProvider.color( edge ) );
+						drawEdge( g, source, target, transform, 1f, doLimitDrawingDepth, drawingDepth );
+					}
+				}
+				break;
+			}
+
+			case TrackMateModelView.TRACK_DISPLAY_MODE_NON_APPROVED_ONLY:
+			{
+				for ( final Integer trackID : nonApprovedTrackIDs )
 				{
 					viewer.trackColorProvider.setCurrentTrackID( trackID );
 					final Set< DefaultWeightedEdge > track = new HashSet<>( model.getTrackModel().trackEdges( trackID ) );

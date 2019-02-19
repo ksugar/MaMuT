@@ -69,6 +69,7 @@ public class MamutKeyboardHandler
 		DEFAULT_KEYBINGS.setProperty( "I", "toggle interpolation" );
 		DEFAULT_KEYBINGS.setProperty( "F", "toggle fused mode" );
 		DEFAULT_KEYBINGS.setProperty( "G", "toggle grouping" );
+		DEFAULT_KEYBINGS.setProperty( "W", "select whole track" );
 		DEFAULT_KEYBINGS.setProperty( "T", BigDataViewerActions.MANUAL_TRANSFORM );
 
 		final String[] numkeys = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
@@ -184,6 +185,8 @@ public class MamutKeyboardHandler
 
 		map.put( "toggle linking mode", MamutActions.getToggleLinkingModeAction( mamut, viewer.getLogger() ) );
 		map.put( "toggle link", MamutActions.getToggleLinkAction( mamut, viewer.getLogger() ) );
+		
+		map.put( "select whole track", MamutActions.getSelectWholeTrackAction( mamut, viewer ) );
 
 		map.put( BigDataViewerActions.SHOW_HELP, MamutActions.getShowHelpAction( viewer ) );
 

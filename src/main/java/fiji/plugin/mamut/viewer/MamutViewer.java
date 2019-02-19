@@ -51,6 +51,7 @@ import bdv.viewer.SourceAndConverter;
 import bdv.viewer.ViewerOptions;
 import bdv.viewer.animate.MessageOverlayAnimator;
 import fiji.plugin.mamut.MaMuT;
+import fiji.plugin.mamut.feature.spot.SpotSourceIdAnalyzerFactory;
 import fiji.plugin.mamut.util.ProgressWriterLogger;
 import fiji.plugin.trackmate.Logger;
 import fiji.plugin.trackmate.Model;
@@ -185,6 +186,12 @@ public class MamutViewer extends JFrame implements TrackMateModelView
 		this.recordMaxProjectionMovieDialog = new MamutRecordMaxProjectionDialog( this, this, new ProgressWriterLogger( logger )  );
 		recordMaxProjectionMovieDialog.setLocationRelativeTo( this );
 		viewerPanel.getDisplay().addOverlayRenderer( recordMaxProjectionMovieDialog );
+		
+		final int sourceId = viewerPanel.getState().getCurrentSource();
+		for ( final Spot spot : model.getSpots().iterable( false ) )
+		{
+			spot.putFeature( SpotSourceIdAnalyzerFactory.SOURCE_ID, Double.valueOf( sourceId ) );
+		}
 
 		setIconImage( MaMuT.MAMUT_ICON.getImage() );
 		setLocationByPlatform( true );

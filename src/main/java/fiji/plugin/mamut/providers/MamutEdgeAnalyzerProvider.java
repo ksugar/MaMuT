@@ -23,6 +23,7 @@ package fiji.plugin.mamut.providers;
 
 import fiji.plugin.trackmate.features.edges.EdgeAnalyzer;
 import fiji.plugin.trackmate.features.edges.EdgeTargetAnalyzer;
+import fiji.plugin.trackmate.features.edges.EdgeTimeLocationAnalyzer;
 import fiji.plugin.trackmate.features.edges.EdgeVelocityAnalyzer;
 import fiji.plugin.trackmate.features.manual.ManualEdgeColorAnalyzer;
 import fiji.plugin.trackmate.providers.EdgeAnalyzerProvider;
@@ -37,9 +38,10 @@ public class MamutEdgeAnalyzerProvider extends EdgeAnalyzerProvider
 
 	static
 	{
-		KEYS = new ArrayList<>( 3 );
+		KEYS = new ArrayList<>( 4 );
 		KEYS.add( EdgeTargetAnalyzer.KEY );
 		KEYS.add( EdgeVelocityAnalyzer.KEY );
+		KEYS.add( EdgeTimeLocationAnalyzer.KEY );
 		KEYS.add( ManualEdgeColorAnalyzer.KEY );
 	}
 

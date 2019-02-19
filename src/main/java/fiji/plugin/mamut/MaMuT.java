@@ -121,6 +121,7 @@ import fiji.plugin.trackmate.SelectionChangeListener;
 import fiji.plugin.trackmate.SelectionModel;
 import fiji.plugin.trackmate.Spot;
 import fiji.plugin.trackmate.TrackMate;
+import fiji.plugin.trackmate.TrackModel;
 import fiji.plugin.trackmate.features.ModelFeatureUpdater;
 import fiji.plugin.trackmate.features.edges.EdgeAnalyzer;
 import fiji.plugin.trackmate.features.edges.EdgeTargetAnalyzer;
@@ -327,9 +328,10 @@ public class MaMuT implements ModelChangeListener
 				{
 					centerOnSpot( selectionModel.getSpotSelection().iterator().next() );
 				}
-				else if ( 1 < selectionModel.getSpotSelection().size() && gui.getProofReadingPanel().isShowing() )
+				else if ( 1 < selectionModel.getSpotSelection().size() && gui.getProofReadingPanel().shouldUpdateCenter() )
 				{
 					centerOnSpot( selectionModel.getSpotSelection().iterator().next() );
+					gui.getProofReadingPanel().setShouldUpdateCenter(false);
 				}
 			}
 		} );
@@ -1321,6 +1323,18 @@ public class MaMuT implements ModelChangeListener
 						if ( !event.isShiftDown() )
 						{
 							// Replace selection
+							final TrackModel trackModel = model.getTrackModel();
+							final Integer trackID = trackModel.trackIDOf( spot );
+							if ( trackID != null ) {
+								final Set< DefaultWeightedEdge > edgeSelection = selectionModel.getEdgeSelection();
+								final Iterator< DefaultWeightedEdge > it = edgeSelection.iterator();
+								while ( it.hasNext() ) {
+									final DefaultWeightedEdge edge = it.next();
+									if ( !trackID.equals( trackModel.trackIDOf( edge ) ) ) {
+										it.remove();
+									}
+								}
+							}
 							selectionModel.clearSpotSelection();
 						}
 						// Toggle it to selection

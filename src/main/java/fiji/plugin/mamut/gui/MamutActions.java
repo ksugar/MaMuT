@@ -33,6 +33,7 @@ import bdv.tools.HelpDialog;
 import fiji.plugin.mamut.MaMuT;
 import fiji.plugin.mamut.viewer.MamutViewer;
 import fiji.plugin.trackmate.Logger;
+import fiji.plugin.trackmate.util.ModelTools;
 
 public class MamutActions
 {
@@ -133,6 +134,11 @@ public class MamutActions
 	{
 		return new ToggleLinkAction( mamut, logger );
 	}
+	
+	public static final Action getSelectWholeTrackAction( final MaMuT mamut, final MamutViewer viewer )
+	{
+		return new SelectWholeTrackAction( mamut );
+	}
 
 	/*
 	 * INNER CLASSES
@@ -230,6 +236,26 @@ public class MamutActions
 		public void actionPerformed( final ActionEvent arg0 )
 		{
 			mamut.toggleLink( logger );
+		}
+
+	}
+	
+	private static final class SelectWholeTrackAction extends AbstractAction
+	{
+
+		private static final long serialVersionUID = 1L;
+
+		private final MaMuT mamut;
+
+		public SelectWholeTrackAction( final MaMuT mamut )
+		{
+			this.mamut = mamut;
+		}
+
+		@Override
+		public void actionPerformed( final ActionEvent arg0 )
+		{
+			ModelTools.selectTrack( mamut.getSelectionModel() );
 		}
 
 	}
