@@ -11,7 +11,7 @@
 
 	<groupId>sc.fiji</groupId>
 	<artifactId>MaMuT_</artifactId>
-	<version>0.28.4-SNAPSHOT</version>
+	<version>0.28.4-EX-SNAPSHOT</version>
 
 	<name>plugins/MaMuT_.jar</name>
 	<description>Fiji plugin for the annotation of massive, multi-view data.</description>
@@ -109,6 +109,10 @@
 
 		<!-- NB: Deploy releases to the ImageJ Maven repository. -->
 		<releaseProfiles>deploy-to-imagej</releaseProfiles>
+
+		<imagej.app.directory>../../../Applications/Fiji.app</imagej.app.directory>
+		<maven.test.skip>true</maven.test.skip>
+		<enforcer.skip>true</enforcer.skip>
 	</properties>
 
 	<repositories>
@@ -141,6 +145,7 @@
 		<dependency>
 			<groupId>sc.fiji</groupId>
 			<artifactId>TrackMate_</artifactId>
+			<version>4.0.0-EX-SNAPSHOT</version>
 		</dependency>
 
 		<!-- ImageJ dependencies -->
@@ -201,4 +206,15 @@
 			<artifactId>jdom2</artifactId>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<outputDirectory>${imagej.app.directory}/plugins</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
